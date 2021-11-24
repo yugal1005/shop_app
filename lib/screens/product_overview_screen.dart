@@ -33,8 +33,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
             ),
             child: IconButton(
               icon: Icon(Icons.shopping_cart),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(CartScreen.routeName),
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
             ),
           ),
           PopupMenuButton(
