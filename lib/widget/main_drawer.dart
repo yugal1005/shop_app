@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/user_product_screen.dart';
 
 import '../screens/product_overview_screen.dart';
 import '../screens/orders_screen.dart';
@@ -34,9 +35,6 @@ class MainDrawer extends StatelessWidget {
             ),
             alignment: Alignment.bottomCenter,
           ),
-          const SizedBox(
-            height: 20,
-          ),
           buildListtile(
             Icon(
               Icons.home,
@@ -45,6 +43,7 @@ class MainDrawer extends StatelessWidget {
             "Home",
             "/",
           ),
+          Divider(),
           buildListtile(
             Icon(
               Icons.credit_card,
@@ -52,6 +51,15 @@ class MainDrawer extends StatelessWidget {
             ),
             "Your Orders",
             OrderScreen.routeName,
+          ),
+          Divider(),
+          buildListtile(
+            Icon(
+              Icons.edit,
+              size: 25,
+            ),
+            "Manage Products",
+            UserProductScreen.routeName,
           ),
         ],
       ),
