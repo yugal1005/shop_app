@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import "package:http/http.dart" as http;
 
 import 'product.dart';
 
@@ -49,8 +52,40 @@ class Products with ChangeNotifier {
     return _items.where((prod) => prod.isFavorite).toList();
   }
 
-  void addProduct() {
-    // _items.add(value)
+  Future<void> addProduct(Product product) {
+    final url = Uri.parse(
+        "https://shop-app-99c38-default-rtdb.asia-southeast1.firebasedatabase.app/products.json");
+    return http
+        .post(url,
+            body: json.encode({
+              "title": product.title,
+              "description": product.description,
+              "price": product.price,
+              // "id" : product.id,
+              "isFavorite": product.isFavorite,
+              "imageUrl": product.imgUrl,
+            }))
+        .then((response) {
+      final newProduct = Product(
+        description: product.description,
+        id: json.decode(response.body)["name"],
+        imgUrl: product.imgUrl,
+        price: product.price,
+        title: product.title,
+      );
+      _items.add(newProduct);
+      notifyListeners();
+    });
+  }
+
+  void update(String id, Product newProduct) {
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    _items[prodIndex] = newProduct;
+    notifyListeners();
+  }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
     notifyListeners();
   }
 }
